@@ -26,20 +26,14 @@ let postData = """
 }
 """
 
-
 curlHelperSetOptString(curl, CURLOPT_URL, serverUrl)
 curlHelperSetOptString(curl, CURLOPT_POSTFIELDS, postData)
-
-/* we want to use our own read function */ 
-// curlHelperSetOptReadFunc(curl, nil, read_callback)
 
 var headers = curl_slist_append(nil, "Content-Type: application/json")
 curlHelperSetOptList(curl, CURLOPT_HTTPHEADER, headers)
 
 /* get verbose debug output please */ 
 curlHelperSetOptBool(curl, CURLOPT_VERBOSE, CURL_TRUE)
-
-// headers.deallocate(capacity: 1)
 
 print("Performing request...")
 
