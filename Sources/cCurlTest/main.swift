@@ -3,6 +3,7 @@ import Foundation
 
 enum CCurlError: Error {
     case InitError
+    case HeaderError
 }
 
 // var read_callback: (@convention(c)
@@ -26,13 +27,19 @@ let postData = """
 }
 """
 
+// set url
 curlHelperSetOptString(curl, CURLOPT_URL, serverUrl)
+
+// set data
 curlHelperSetOptString(curl, CURLOPT_POSTFIELDS, postData)
 
-var headers = curl_slist_append(nil, "Content-Type: application/json")
+// set headers
+var headers = curl_slist_append(nil, "Accept: application/json")
+headers = curl_slist_append(headers, "Content-Type: application/json")
+headers = curl_slist_append(headers, "charsets: utf-8")
 curlHelperSetOptList(curl, CURLOPT_HTTPHEADER, headers)
 
-/* get verbose debug output please */ 
+// get verbose debug output
 curlHelperSetOptBool(curl, CURLOPT_VERBOSE, CURL_TRUE)
 
 print("Performing request...")
@@ -43,4 +50,3 @@ if resultCode != CURLE_OK {
 }
 
 curl_easy_cleanup(curl)
-
