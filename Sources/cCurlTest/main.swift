@@ -1,10 +1,7 @@
 import CCurl
 import Foundation
 
-enum CCurlError: Error {
-    case InitError
-    case HeaderError
-}
+extension String: Error {}
 
 // var read_callback: (@convention(c)
 // (UnsafeMutablePointer<Int8>?, Int, Int, UnsafeMutableRawPointer?) -> Int)! = { dest, size, nmemb, userp in
@@ -14,7 +11,7 @@ enum CCurlError: Error {
 
 guard let curl = curl_easy_init() else {
     print("curl could no be initialised!")
-    throw CCurlError.InitError
+    throw "Error during curl init"
 }
 
 let serverUrl =  "http://192.168.1.10:3000/graphql"
@@ -47,7 +44,7 @@ postDataUtf8.withUnsafeBufferPointer { ptr in
 // set verbose debug output to true
 curlHelperSetOptBool(curl, CURLOPT_VERBOSE, CURL_TRUE)
 
-// perfo
+// perform request
 let resultCode = curl_easy_perform(curl)
 if resultCode != CURLE_OK {
     print("something went wrong: " + String(describing: curl_easy_strerror(resultCode)))
