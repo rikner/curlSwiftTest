@@ -18,6 +18,7 @@ guard let curl = curl_easy_init() else {
 }
 
 let serverUrl =  "http://192.168.1.10:3000/graphql"
+// let postData = "{\"query\": \"query SingleSong($songId: ID!) { song(songId: $songId) { _id } }\", \"variables\": {\"songId\": \"AqpMMhAgBvw4u9qsu\"}}"
 let postData = """
 {
 	"query": "query SingleSong($songId: ID!) { song(songId: $songId) { _id } }",
@@ -34,9 +35,8 @@ curlHelperSetOptString(curl, CURLOPT_URL, serverUrl)
 curlHelperSetOptString(curl, CURLOPT_POSTFIELDS, postData)
 
 // set headers
-var headers = curl_slist_append(nil, "Accept: application/json")
-headers = curl_slist_append(headers, "Content-Type: application/json")
-headers = curl_slist_append(headers, "charsets: utf-8")
+var headers = curl_slist_append(nil, "Content-Type: application/json")
+// headers = curl_slist_append(headers, "charsets: utf-8")
 curlHelperSetOptList(curl, CURLOPT_HTTPHEADER, headers)
 
 // get verbose debug output
